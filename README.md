@@ -1,21 +1,54 @@
 # CP // MODE
 
-A desktop dashboard for competitive programmers: solved counts across Codeforces, AtCoder and CodeChef, failure post-mortems you log yourself, spaced re-solving (3, 10, 30 days), problem recommendations, contest review, and a voice coach.
+A desktop dashboard for competitive programmers. It tracks your solved problems across Codeforces, AtCoder and CodeChef, lets you log your own failure post-mortems, schedules spaced re-solving (3, 10 and 30 days), recommends problems at your level, and reviews contests.
 
-## Run it
-1. Install Node.js 18+ from nodejs.org.
-2. `npm install`
-3. `npm start` (desktop app) or `npm run web` and open http://localhost:3000
+Built with Electron (desktop window) and a small local Node.js server. Developed and tested on macOS.
 
-On first launch a setup form asks for your Codeforces handle (required), AtCoder and CodeChef handles (optional), and an optional Gemini API key. Use **Test Gemini** to check the key. If the test says the model is not available, change the model name in the form to the one Google's message suggests. Reopen the form any time with **⚙ SETUP**.
+## Requirements
+- Node.js 18 or newer (https://nodejs.org)
 
-If `npm start` says Electron failed to install, run `node node_modules/electron/install.js` once, then `npm start`.
+## Run it as a desktop app (Electron)
+```
+npm install
+npm start
+```
+Electron opens CP // MODE in its own window, not in a browser. The Electron version is pinned to 45.2.3 in `package.json`.
 
-## Voice coach
-Hold Cmd+M (or Ctrl+M) and speak, release to send. The panel opens on its own; close it with the ✕ or Esc. A daily briefing plays on your first visit each day. The desktop app needs a Gemini key for voice and microphone permission. Without a key, typed questions get simple built-in answers.
+### If `npm start` says "Electron failed to install correctly"
+Newer versions of npm can skip Electron's download step. Run it by hand once, then start again:
+```
+node node_modules/electron/install.js
+npm start
+```
+If that still fails, reinstall Electron:
+```
+rm -rf node_modules/electron
+npm install
+node node_modules/electron/install.js
+npm start
+```
+Check the download worked with `ls node_modules/electron/dist` (it should list `Electron.app` on a Mac).
 
-## Privacy
-Your handles, key and history are saved only on your computer (the app's data folder). Nothing is committed to this repo.
+## Run it in a browser instead
+```
+npm run web
+```
+Then open http://localhost:3000.
+
+## First launch
+A setup form asks for your Codeforces handle (required) and your AtCoder and CodeChef handles (optional). Reopen it any time with the **⚙ SETUP** button at the bottom-left.
 
 ## Build a Mac app
-`npm run dist` creates `CP MODE.app` in `dist/`.
+```
+npm run dist
+```
+This creates `CP MODE.app` in `dist/`. It is not signed by Apple, so the first time you open it, right-click it and choose Open.
+
+## Project layout
+- `main.js` starts the Electron window and the local server
+- `server.js` the local server and API
+- `lib/` Codeforces, AtCoder and CodeChef fetching, and the app's logic
+- `public/` the interface (HTML, CSS, JavaScript and the intro video)
+
+## Privacy
+Your handles and history are saved only on your computer, in the app's data folder. Nothing is uploaded anywhere except normal requests to the Codeforces, AtCoder and CodeChef websites. Nothing personal is committed to this repo.
