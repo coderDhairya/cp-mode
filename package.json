@@ -1,0 +1,29 @@
+{
+  "name": "cp-mode",
+  "version": "2.0.0",
+  "description": "CP // MODE desktop app",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "web": "node server.js",
+    "dist": "electron-builder --mac"
+  },
+  "devDependencies": {
+    "electron": "^45.2.3",
+    "electron-builder": "^25.0.0"
+  },
+  "build": {
+    "appId": "dev.dhairya.cpmode",
+    "productName": "CP MODE",
+    "files": [
+      "**/*",
+      "!data"
+    ],
+    "mac": {
+      "category": "public.app-category.developer-tools",
+      "extendInfo": {
+        "NSMicrophoneUsageDescription": "Voice coach"
+      }
+    }
+  }
+}
